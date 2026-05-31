@@ -16,9 +16,9 @@ timeZone = "Asia/Dubai"
   github = "https://github.com/Cyberpsych0s1s"
   [params.giscus]
     repo = "Cyberpsych0s1s/cyberpsych0s1s.github.io"
-    repoId = ""
+    repoId = "R_kgDOSqlwMQ"
     category = "guestbook"
-    categoryId = ""
+    categoryId = "DIC_kwDOSqlwMc4C-Onk"
 
 [taxonomies]
   tag = "tags"
