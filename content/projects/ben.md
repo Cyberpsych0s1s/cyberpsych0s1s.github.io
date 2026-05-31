@@ -2,7 +2,7 @@
 title: "ben"
 slug: "ben"
 descriptor: "a minimal terminal text editor in c — small, fast, no dependencies"
-status: "wip"
+status: "running"
 stack: ["c", "ncurses", "tui"]
 repo: "https://github.com/Cyberpsych0s1s/ben"
 order: 2

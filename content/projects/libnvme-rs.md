@@ -2,7 +2,7 @@
 title: "libnvme-rs"
 slug: "libnvme-rs"
 descriptor: "safe rust bindings for the linux libnvme c library"
-status: "wip"
+status: "running"
 stack: ["rust", "ffi", "nvme", "kernel"]
 repo: "https://github.com/Cyberpsych0s1s/libnvme-rs"
 order: 4

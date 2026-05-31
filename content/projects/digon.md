@@ -2,7 +2,7 @@
 title: "digon"
 slug: "digon"
 descriptor: "a new systems language — stage-0 compiler in c++17 on llvm"
-status: "running"
+status: "wip"
 stack: ["c++", "llvm", "compilers", "language-design"]
 repo: "https://github.com/Cyberpsych0s1s/digon"
 pinned: true

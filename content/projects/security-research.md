@@ -2,7 +2,7 @@
 title: "security research"
 slug: "security-research"
 descriptor: "reading real-world c/c++ source for memory-safety bugs"
-status: "wip"
+status: "running"
 stack: ["c", "fuzzing", "memory-safety"]
 order: 5
 date: 2026-05-20
