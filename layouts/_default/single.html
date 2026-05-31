@@ -1,0 +1,11 @@
+{{ define "main" }}
+<article class="panel" style="padding: clamp(20px,5vw,40px)">
+  <header class="essay-head">
+    <h1>{{ .Title }}</h1>
+    {{ if eq .Section "devlogs" }}
+    <div class="meta"><span>{{ .Date.Format "2006.01.02" }}</span>{{ with .Params.tags }} &middot; {{ delimit . ", " }}{{ end }}</div>
+    {{ end }}
+  </header>
+  <div class="prose">{{ .Content }}</div>
+</article>
+{{ end }}

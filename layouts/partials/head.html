@@ -1,0 +1,62 @@
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  {{/* pre-paint gate: persisted crt setting + once-per-session boot.
+       boot is skipped entirely under reduced-motion. */}}
+  <script>(function(){try{var d=document.documentElement;if(localStorage.getItem("crt")==="off"){d.className+=" crt-off";}var m=window.matchMedia&&matchMedia("(prefers-reduced-motion: reduce)").matches;if(!m&&!sessionStorage.getItem("booted")){d.className+=(localStorage.getItem("sound")==="off")?" booting":" boot-armed";}}catch(e){}})();</script>
+
+  {{- $isHome := .IsHome -}}
+  <title>{{ if $isHome }}{{ site.Params.node }} :: broadcasting from the wired{{ else }}{{ .Title }} :: {{ site.Params.node }}{{ end }}</title>
+
+  {{- $desc := or .Description .Summary site.Params.description -}}
+  <meta name="description" content="{{ $desc | plainify | truncate 180 }}">
+  <meta name="author" content="{{ site.Params.author }}">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#15110b">
+  <link rel="canonical" href="{{ .Permalink }}">
+
+  {{- $ogImage := "og.png" | absURL -}}
+  <meta property="og:site_name" content="{{ site.Params.node }}">
+  <meta property="og:title" content="{{ if $isHome }}{{ site.Params.node }}{{ else }}{{ .Title }}{{ end }}">
+  <meta property="og:description" content="{{ $desc | plainify | truncate 180 }}">
+  <meta property="og:type" content="{{ if .IsPage }}article{{ else }}website{{ end }}">
+  <meta property="og:url" content="{{ .Permalink }}">
+  <meta property="og:image" content="{{ $ogImage }}">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="{{ site.Params.node }} — broadcasting from the wired">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="{{ $ogImage }}">
+
+  <script type="application/ld+json">
+  {{- $person := dict
+    "@type" "Person"
+    "name" site.Params.fullName
+    "alternateName" site.Params.handle
+    "url" site.Home.Permalink
+    "sameAs" (slice site.Params.github)
+  -}}
+  {{- dict
+    "@context" "https://schema.org"
+    "@graph" (slice
+      $person
+      (dict "@type" "WebSite" "name" site.Params.node "url" site.Home.Permalink "author" $person)
+    )
+    | jsonify (dict "indent" "  ") | safeJS -}}
+  </script>
+
+  {{- with resources.Get "css/main.css" }}
+    {{- if hugo.IsProduction }}
+      {{- $css := . | minify | fingerprint -}}
+      <link rel="stylesheet" href="{{ $css.RelPermalink }}" integrity="{{ $css.Data.Integrity }}">
+    {{- else }}
+      <link rel="stylesheet" href="{{ .RelPermalink }}">
+    {{- end }}
+  {{- end }}
+
+  <link rel="preload" as="font" type="font/woff2" href="/fonts/departure-mono-regular.woff2" crossorigin>
+  <link rel="preload" as="audio" href="/sfx/startup.wav">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="alternate" type="application/rss+xml" title="{{ site.Params.node }} devlogs" href="{{ "devlogs/index.xml" | absURL }}">
+</head>

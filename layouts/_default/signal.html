@@ -1,0 +1,21 @@
+{{ define "main" }}
+<div class="section-head">
+  <h1>signal <span class="desc">// leave a trace</span></h1>
+</div>
+{{ with .Content }}<div class="prose" style="max-width:none">{{ . }}</div>{{ end }}
+{{ $g := site.Params.giscus }}
+{{ if and $g $g.categoryId }}
+<div class="signal-board" style="margin-top:18px">
+  <script src="https://giscus.app/client.js"
+    data-repo="{{ $g.repo }}" data-repo-id="{{ $g.repoId }}"
+    data-category="{{ $g.category }}" data-category-id="{{ $g.categoryId }}"
+    data-mapping="pathname" data-strict="0" data-reactions-enabled="0"
+    data-emit-metadata="0" data-input-position="top" data-theme="dark"
+    data-lang="en" crossorigin="anonymous" async></script>
+</div>
+{{ else }}
+<div class="panel" style="padding:16px; margin-top:14px">
+  <p style="margin:0; color:var(--ink-muted)">&mdash; channel offline. the guestbook needs a one-time github setup (see readme). &mdash;</p>
+</div>
+{{ end }}
+{{ end }}

@@ -1,0 +1,7 @@
+<nav class="rail" aria-label="sections">
+  <a class="home" href="{{ "/" | relURL }}">&lsaquo; node</a>
+  {{- $cur := .RelPermalink -}}
+  {{- range site.Menus.main -}}
+    <a href="{{ .URL }}"{{ if hasPrefix $cur .URL }} class="cur" aria-current="page"{{ end }}>{{ .Name }}</a>
+  {{- end -}}
+</nav>

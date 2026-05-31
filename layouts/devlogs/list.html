@@ -1,0 +1,38 @@
+{{ define "main" }}
+<div class="section-head">
+  <h1>devlogs <span class="desc">// transmissions, in progress</span></h1>
+</div>
+
+<div class="filters" data-scope="#feed" role="group" aria-label="filter devlogs">
+  <button type="button" data-f="all" class="on">all</button>
+  <button type="button" data-f="thread">threads</button>
+  <button type="button" data-f="essay">essays</button>
+  <button type="button" data-f="fragment">fragments</button>
+</div>
+
+<div class="feed" id="feed">
+  {{ range .Pages.ByDate.Reverse }}
+    {{ $t := .Params.type | default "fragment" }}
+    <article class="entry {{ $t }}" data-cat="{{ $t }}">
+      {{ if eq $t "fragment" }}
+        <div class="e-head"><span class="ts">{{ .Date.Format "2006.01.02 · 15:04" }}</span><span class="e-chip">fragment</span></div>
+        <div class="e-body">{{ .Content }}</div>
+      {{ else if eq $t "thread" }}
+        {{ $parts := split (trim .RawContent "\n") "\n---\n" }}
+        <div class="e-head"><span class="ts">{{ .Date.Format "2006.01.02" }}</span><span class="e-chip">thread &middot; {{ len $parts }}</span>{{ with .Params.project }}<span class="e-chip">re: {{ . }}</span>{{ end }}</div>
+        {{ with .Title }}<div class="e-title"><a href="{{ $.RelPermalink }}">{{ . }}</a></div>{{ end }}
+        <div class="thread-parts">
+          {{ range $i, $part := $parts }}<div class="part"><span class="n">{{ add $i 1 }}/</span>{{ $part | markdownify }}</div>{{ end }}
+        </div>
+      {{ else }}
+        <div class="e-head"><span class="ts">{{ .Date.Format "2006.01.02" }}</span><span class="e-chip">essay</span><span class="reading-time">{{ partial "icon.html" "clock" }}{{ or .Params.reading_time .ReadingTime }} min</span></div>
+        <div class="e-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></div>
+        <div class="e-excerpt">{{ .Summary | plainify | truncate 200 }}</div>
+        <a class="read-more" href="{{ .RelPermalink }}">read transmission &rarr;</a>
+      {{ end }}
+    </article>
+  {{ end }}
+</div>
+
+<div class="pager"><a href="{{ "/archive/" | relURL }}">&mdash; full archive &mdash;</a></div>
+{{ end }}

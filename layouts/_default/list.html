@@ -1,0 +1,14 @@
+{{ define "main" }}
+<div class="section-head">
+  <h1>{{ .Title }}</h1>
+  {{ with .Content }}<div class="desc">{{ . }}</div>{{ end }}
+</div>
+<div class="feed">
+  {{ range .Pages.ByDate.Reverse }}
+  <a class="entry" href="{{ .RelPermalink }}">
+    <div class="e-head"><span class="ts">{{ .Date.Format "2006.01.02" }}</span></div>
+    <div class="e-title">{{ .Title }}</div>
+  </a>
+  {{ end }}
+</div>
+{{ end }}

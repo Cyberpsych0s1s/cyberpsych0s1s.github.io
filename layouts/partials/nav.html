@@ -1,0 +1,20 @@
+{{- $cur := .ctx.RelPermalink -}}
+<nav class="rail" aria-label="layers">
+  <span class="edge-label" aria-hidden="true">close the world &nbsp;/&nbsp; open the next</span>
+  <ul class="layers">
+    {{- range $i, $e := site.Menus.main -}}
+      {{- $active := or (eq $cur $e.URL) (and (ne $e.URL "/") (hasPrefix $cur $e.URL)) -}}
+      <li class="{{ if $active }}on{{ end }}">
+        <a href="{{ $e.URL }}"{{ if $active }} aria-current="page"{{ end }}>
+          <span class="ln">{{ printf "%02d" (add $i 1) }}</span>
+          <span class="nm">{{ $e.Name }}</span>
+        </a>
+      </li>
+    {{- end -}}
+  </ul>
+  <div class="rail-foot">
+    <a href="{{ site.Params.github }}" rel="me">→ github</a>
+    <a href="{{ "posts/index.xml" | relURL }}">→ rss</a>
+    {{- with site.Params.email }}<a href="mailto:{{ . }}">→ mail</a>{{ end }}
+  </div>
+</nav>

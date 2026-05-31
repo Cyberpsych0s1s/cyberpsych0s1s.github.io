@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="{{ or site.Language.Lang "en" }}">
+{{ partial "head.html" . }}
+{{- /* section key + ambient glyph */ -}}
+{{- $seg := .Section -}}
+{{- if .IsHome }}{{ $seg = "home" }}{{ else if not $seg }}{{ $seg = strings.TrimSuffix "/" (strings.TrimPrefix "/" .RelPermalink) }}{{ end -}}
+{{- $glyphs := dict "home" "接続" "projects" "作品" "devlogs" "信号" "now" "在" "colophon" "記録" -}}
+{{- $glyph := index $glyphs $seg -}}
+<body class="{{ if .IsHome }}is-home{{ end }}{{ if .IsPage }} reading{{ end }}">
+
+  <div class="boot" aria-hidden="true">
+    <div class="boot-inner">
+      <p class="boot-line-1">&gt; establishing link to {{ site.Params.node }} &hellip;</p>
+      <p class="boot-line-2">&gt; handshake ok &middot; signal acquired</p>
+      <p class="boot-line-3"><span class="alive">&gt; presence detected. someone is here.</span> <span class="boot-cursor"></span></p>
+    </div>
+    <p class="boot-prompt">&gt; click to connect <span class="boot-cursor"></span></p>
+  </div>
+  <button class="boot-skip" type="button" hidden>skip &crarr;</button>
+
+  {{ partial "chrome.html" . }}
+
+  {{ with $glyph }}<div class="glyph" aria-hidden="true">{{ . }}</div>{{ end }}
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="vignette" aria-hidden="true"></div>
+
+  <main class="shell{{ if .IsHome }} wide{{ end }}" id="main">
+    {{ block "main" . }}{{ end }}
+    {{ if not .IsHome }}{{ partial "footer-rail.html" . }}{{ end }}
+  </main>
+
+  <div class="controls">
+    <button class="ctl" id="crt-ctl" type="button" aria-pressed="true">{{ partial "icon.html" "monitor" }}<span class="lbl">crt: on</span></button>
+    <button class="ctl" id="snd-ctl" type="button" aria-pressed="false">{{ partial "icon.html" "volume-off" }}<span class="lbl">ambient: off</span></button>
+  </div>
+
+  {{ with resources.Get "js/site.js" }}
+    {{- if hugo.IsProduction }}{{ $js := . | minify | fingerprint }}<script src="{{ $js.RelPermalink }}" defer></script>
+    {{- else }}<script src="{{ .RelPermalink }}" defer></script>{{ end -}}
+  {{ end }}
+</body>
+</html>

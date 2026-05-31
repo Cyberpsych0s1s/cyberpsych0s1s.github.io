@@ -1,0 +1,61 @@
+baseURL = "https://almahri.dev/"
+defaultContentLanguage = "en"
+title = "almahri.node"
+enableRobotsTXT = true
+enableEmoji = false
+# date-only frontmatter resolves to local midnight; without this a post dated
+# "today" can read as future and get skipped when Actions builds in UTC.
+timeZone = "Asia/Dubai"
+
+[params]
+  handle = "almahri"
+  node = "almahri.node"
+  author = "Omar Almahri"
+  fullName = "Omar Almahri"
+  description = "the node of almahri — projects, devlogs, and a now-page, broadcasting from the wired."
+  github = "https://github.com/Cyberpsych0s1s"
+  [params.giscus]
+    repo = "Cyberpsych0s1s/cyberpsych0s1s.github.io"
+    repoId = ""
+    category = "guestbook"
+    categoryId = ""
+
+[taxonomies]
+  tag = "tags"
+
+[menu]
+  [[menu.main]]
+    name = "projects"
+    url = "/projects/"
+    weight = 1
+  [[menu.main]]
+    name = "devlogs"
+    url = "/devlogs/"
+    weight = 2
+  [[menu.main]]
+    name = "now"
+    url = "/now/"
+    weight = 3
+  [[menu.main]]
+    name = "colophon"
+    url = "/colophon/"
+    weight = 4
+  [[menu.main]]
+    name = "signal"
+    url = "/signal/"
+    weight = 5
+
+[markup]
+  [markup.highlight]
+    noClasses = true
+    style = "github-dark"
+    lineNos = false
+    tabWidth = 4
+  [markup.goldmark.renderer]
+    unsafe = true
+  [markup.tableOfContents]
+    startLevel = 2
+    endLevel = 4
+
+[pagination]
+  pagerSize = 20

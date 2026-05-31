@@ -1,0 +1,29 @@
+{{ define "main" }}
+<div class="section-head">
+  <h1>projects <span class="desc">// things i soldered together</span></h1>
+  <span class="count">{{ len .Pages }} nodes</span>
+</div>
+
+<div class="filters" data-scope="#proj-rows" role="group" aria-label="filter projects">
+  <button type="button" data-f="all" class="on">all</button>
+  <button type="button" data-f="live">live</button>
+  <button type="button" data-f="archived">archived</button>
+</div>
+
+<div class="rows" id="proj-rows">
+  {{ range $i, $p := (.Pages.ByParam "order") }}
+  <a class="row{{ if eq $p.Params.status "running" }} running{{ end }}" href="{{ $p.RelPermalink }}" data-cat="{{ $p.Params.status }}">
+    <span class="r-idx">{{ printf "%02d" (add $i 1) }}</span>
+    <div class="r-main">
+      <span class="r-name">{{ $p.Title }} {{ partial "status-pill.html" $p }}</span>
+      {{ with $p.Params.descriptor }}<div class="r-desc">{{ . }}</div>{{ end }}
+      {{ with $p.Params.stack }}<div class="chips">{{ range . }}<span class="chip">{{ . }}</span>{{ end }}</div>{{ end }}
+    </div>
+    <div class="r-right">
+      {{ with $p.Params.started }}<span class="r-year">{{ . }}</span>{{ end }}
+      <span class="enter">{{ partial "icon.html" "arrow-right" }}</span>
+    </div>
+  </a>
+  {{ end }}
+</div>
+{{ end }}

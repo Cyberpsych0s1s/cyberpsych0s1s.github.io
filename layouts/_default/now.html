@@ -1,0 +1,44 @@
+{{ define "main" }}
+{{ $u := .Params.updated | default .Lastmod }}
+{{ $ut := $u | time.AsTime }}
+{{ $days := int (math.Floor (div (sub now.Unix $ut.Unix) 86400)) }}
+<div class="now-head">
+  <h1>now</h1>
+  <span class="now-pill"><i aria-hidden="true"></i> live</span>
+  <span class="ts on-dark">updated {{ if le $days 0 }}today{{ else }}{{ $days }}d ago{{ end }}</span>
+</div>
+<p class="now-sub">// where i am, present time</p>
+
+{{ with .Params.focus }}
+<div class="focus-panel">
+  <span class="ulabel">focus</span>
+  {{ . | markdownify }}
+</div>
+{{ end }}
+
+<div class="now-grid">
+  <div class="now-card">
+    <div class="ch">{{ partial "icon.html" "box" }}<span class="ulabel">building</span></div>
+    <ul>{{ range .Params.building }}<li>{{ . | markdownify }}</li>{{ end }}</ul>
+  </div>
+  <div class="now-card alt">
+    <div class="ch">{{ partial "icon.html" "book" }}<span class="ulabel">reading</span></div>
+    <ul>{{ range .Params.reading }}<li>{{ . | markdownify }}</li>{{ end }}</ul>
+  </div>
+  <div class="now-card alt">
+    <div class="ch">{{ partial "icon.html" "headphones" }}<span class="ulabel">listening</span></div>
+    <ul>{{ range .Params.listening }}<li>{{ . | markdownify }}</li>{{ end }}</ul>
+  </div>
+  <div class="now-card">
+    <div class="ch">{{ partial "icon.html" "map-pin" }}<span class="ulabel">node location</span></div>
+    <ul>{{ range .Params.location }}<li>{{ . | markdownify }}</li>{{ end }}</ul>
+  </div>
+</div>
+
+<div class="mood-strip">
+  <span class="m-mood">{{ with .Params.mood }}mood: {{ . | markdownify }}{{ end }}</span>
+  <span>uptime <span data-since="2026-05-01T00:00:00">&hellip;</span> &middot; temp 41&deg;c</span>
+</div>
+
+<p class="now-foot">&gt; this is a <em>now</em> page &mdash; a present-tense signal from the node, not a feed or a status. if you keep your own node, broadcast one too. <a href="https://nownownow.com/about" rel="noopener">what is this?</a></p>
+{{ end }}

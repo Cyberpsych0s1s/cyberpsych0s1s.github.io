@@ -1,0 +1,2 @@
+{{- $s := .Params.status | default "wip" -}}
+<span class="pill {{ $s }}">{{ if eq $s "running" }}<span class="d" aria-hidden="true"></span>{{ end }}{{ $s }}</span>

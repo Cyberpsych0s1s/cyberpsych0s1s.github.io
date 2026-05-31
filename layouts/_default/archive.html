@@ -1,0 +1,18 @@
+{{ define "main" }}
+<div class="section-head">
+  <h1>archive <span class="desc">// every transmission, flat</span></h1>
+</div>
+<input class="archive-search" type="search" placeholder="filter by text or tag&hellip;" aria-label="filter archive">
+<table class="archive-list">
+  <tbody>
+    {{ range (where site.RegularPages "Section" "devlogs").ByDate.Reverse }}
+    <tr>
+      <td class="a-date">{{ .Date.Format "2006.01.02" }}</td>
+      <td class="a-type">{{ .Params.type | default "fragment" }}</td>
+      <td><a href="{{ .RelPermalink }}">{{ with .Title }}{{ . }}{{ else }}{{ .Summary | plainify | truncate 72 }}{{ end }}</a></td>
+      <td class="a-tags">{{ with .Params.tags }}{{ delimit . ", " }}{{ end }}</td>
+    </tr>
+    {{ end }}
+  </tbody>
+</table>
+{{ end }}

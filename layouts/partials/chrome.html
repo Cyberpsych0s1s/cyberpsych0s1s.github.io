@@ -1,0 +1,21 @@
+<div class="chrome">
+  <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+  <nav class="crumb" aria-label="breadcrumb">
+    <a href="{{ "/" | relURL }}"{{ if .IsHome }} class="cur"{{ end }}>{{ site.Params.node }}</a>
+    {{- if not .IsHome -}}
+      {{- $sec := .Section -}}
+      {{- if $sec -}}
+        <span class="sep">/</span>
+        {{- if .IsPage -}}
+          <a href="{{ printf "/%s/" $sec | relURL }}">{{ $sec }}</a>
+          <span class="sep">/</span><span class="cur">{{ .Title }}</span>
+        {{- else -}}
+          <span class="cur">{{ $sec }}</span>
+        {{- end -}}
+      {{- else -}}
+        <span class="sep">/</span><span class="cur">{{ .Title }}</span>
+      {{- end -}}
+    {{- end -}}
+  </nav>
+  <span class="conn">{{ partial "icon.html" "activity" }}<span class="txt">linked</span></span>
+</div>

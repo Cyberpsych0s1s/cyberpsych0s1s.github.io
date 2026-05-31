@@ -1,0 +1,12 @@
+{{ define "main" }}
+<div class="section-head">
+  <h1>open a channel <span class="desc">// reach the node</span></h1>
+</div>
+<div class="channels">
+  <a class="channel" href="{{ site.Params.github }}" rel="noopener">{{ partial "icon.html" "code" }}<span class="c-label">github</span><span class="c-val">@Cyberpsych0s1s</span></a>
+  <a class="channel" href="{{ "/signal/" | relURL }}">{{ partial "icon.html" "broadcast" }}<span class="c-label">guestbook</span><span class="c-val">leave a signal &rarr;</span></a>
+  {{ with site.Params.email }}<a class="channel" href="mailto:{{ . }}">{{ partial "icon.html" "mail" }}<span class="c-label">mail</span><span class="c-val">{{ . }}</span></a>{{ end }}
+</div>
+<div class="term-input" aria-hidden="true"><span>&gt;</span> open a channel<span class="cursor"></span></div>
+{{ with .Content }}<div class="prose" style="margin-top:18px; max-width:none">{{ . }}</div>{{ end }}
+{{ end }}

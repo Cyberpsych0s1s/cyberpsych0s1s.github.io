@@ -1,0 +1,42 @@
+{{ define "main" }}
+<p class="handshake">
+  &gt; link established &middot; {{ site.Params.node }}<br>
+  &gt; handshake ok &middot; signal acquired<br>
+  <span class="alive">&gt; presence detected. someone is here.</span>
+</p>
+
+<div class="motd" id="motd" aria-label="message of the day" hidden>
+  <div class="motd-head">
+    <span class="motd-prompt">&gt; motd &middot; <span class="motd-date"></span></span>
+    <span class="motd-tag"></span>
+  </div>
+  <div class="motd-body"></div><span class="motd-cur"></span>
+</div>
+
+<h1 class="handle">{{ site.Params.handle }}<span class="cursor"></span></h1>
+<p class="handle-sub">node // online &middot; broadcasting from the wired</p>
+
+<nav class="transmissions" aria-label="sections">
+  <a class="tpanel accent" href="{{ "/projects/" | relURL }}">
+    <span class="top">{{ partial "icon.html" "folder" }}<span class="idx">01</span></span>
+    <h2>projects</h2>
+    <p>things i soldered together</p>
+  </a>
+  <a class="tpanel alt" href="{{ "/devlogs/" | relURL }}">
+    <span class="top">{{ partial "icon.html" "file-text" }}<span class="idx">02</span></span>
+    <h2>devlogs</h2>
+    <p>transmissions, in progress</p>
+  </a>
+  <a class="tpanel" href="{{ "/now/" | relURL }}">
+    <span class="top">{{ partial "icon.html" "broadcast" }}<span class="idx">03</span></span>
+    <h2>now</h2>
+    <p>where i am, present time</p>
+    <span class="live-dot"><i></i> live</span>
+  </a>
+</nav>
+
+<div class="statusline">
+  <span>uptime <span data-since="2026-05-01T00:00:00">&hellip;</span> &middot; temp 41&deg;c &middot; fans nominal</span>
+  <span>{{ site.Params.node }}</span>
+</div>
+{{ end }}

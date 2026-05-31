@@ -1,0 +1,45 @@
+{{ define "main" }}
+{{ $slug := .File.ContentBaseName }}
+<article class="panel" style="padding: clamp(20px,5vw,40px)">
+  <header class="essay-head">
+    <h1>{{ .Title }}</h1>
+    <div class="meta">{{ partial "status-pill.html" . }}{{ with .Params.descriptor }} <span>{{ . }}</span>{{ end }}</div>
+  </header>
+
+  {{ if eq .Params.status "archived" }}<p class="archived-banner">&mdash; archived. kept for the ghosts. &mdash;</p>{{ end }}
+
+  <div class="readout">
+    <div class="kv">
+      <span class="k">status</span><span class="v">{{ .Params.status }}</span>
+      {{ with .Params.stack }}<span class="k">made of</span><span class="v">{{ delimit . " · " }}</span>{{ end }}
+      {{ with .Params.started }}<span class="k">started</span><span class="v">{{ . }}</span>{{ end }}
+      {{ with .Params.last_signal }}<span class="k">last signal</span><span class="v">{{ . }}</span>{{ end }}
+      {{ with .Params.metric }}<span class="k">metric</span><span class="v">{{ . }}</span>{{ end }}
+    </div>
+    {{ if or .Params.repo .Params.live .Params.writeup }}
+    <div class="links">
+      {{ with .Params.repo }}<a href="{{ . }}" rel="noopener">repo {{ partial "icon.html" "arrow-up-right" }}</a>{{ end }}
+      {{ with .Params.live }}<a href="{{ . }}" rel="noopener">live {{ partial "icon.html" "arrow-up-right" }}</a>{{ end }}
+      {{ with .Params.writeup }}<a href="{{ . }}">writeup &darr;</a>{{ end }}
+    </div>
+    {{ end }}
+  </div>
+
+  <div class="prose">{{ .Content }}</div>
+
+  {{ $logs := where (where site.RegularPages "Section" "devlogs") "Params.project" $slug }}
+  {{ with $logs }}
+  <div class="signal-log">
+    <div class="ulabel">signal log</div>
+    {{ range .ByDate.Reverse }}
+    <div class="sl-row"><span class="ts">{{ .Date.Format "2006.01.02" }}</span> <a href="{{ .RelPermalink }}">{{ with .Title }}{{ . }}{{ else }}{{ .Summary | truncate 64 }}{{ end }}</a></div>
+    {{ end }}
+  </div>
+  {{ end }}
+
+  <div class="prevnext">
+    <span>{{ with .PrevInSection }}<a href="{{ .RelPermalink }}">&lsaquo; {{ .Title }}</a>{{ end }}</span>
+    <span>{{ with .NextInSection }}<a href="{{ .RelPermalink }}">{{ .Title }} &rsaquo;</a>{{ end }}</span>
+  </div>
+</article>
+{{ end }}
