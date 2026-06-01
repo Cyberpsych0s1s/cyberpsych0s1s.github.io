@@ -73,3 +73,7 @@ hugo.toml  config, menu, params
 
 identity lives in `hugo.toml [params]`; the footer nav is the `[menu]` block. the
 `/signal/` guestbook runs on giscus — its ids are in `[params.giscus]`.
+
+
+# Attribution
+"mouseclick.wav by theplax -- https://freesound.org/s/618188/ -- License: Attribution 4.0"
