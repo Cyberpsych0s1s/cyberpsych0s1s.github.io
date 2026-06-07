@@ -1,7 +1,6 @@
 ---
 type: essay
 date: 2026-06-06T20:00:00
-draft: true
 title: "stage zero"
 tags: ["digon"]
 reading_time: 3
