@@ -42,4 +42,4 @@ it can't do real work. that's what the log is for — you watch it reach, or wat
 
 repo at [github.com/Cyberpsych0s1s/digon](https://github.com/Cyberpsych0s1s/digon). pre-alpha. stay on the line.
 
-"why would he call it digon?" "Necause the second you compile it and hit a segfault, your unsaved progress will just die and be gone." - (Gemini)[https://en.wikipedia.org/wiki/Garbage]
+"why would he call it digon?" "Necause the second you compile it and hit a segfault, your unsaved progress will just die and be gone." - [Gemini](https://en.wikipedia.org/wiki/Garbage)
