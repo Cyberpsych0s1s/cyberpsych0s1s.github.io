@@ -1,0 +1,10 @@
+{{- $type := .Params.type | default "fragment" -}}
+{{- $val := .Title | lower -}}
+{{- $c := "#8a7d63" -}}
+{{- if eq $type "essay" -}}{{- $c = "#b32a23" -}}{{- end -}}
+{{- if eq $type "thread" -}}
+  {{- $c = "#3a6e6a" -}}
+  {{- $parts := len (split (trim .RawContent "\n") "\n---\n") -}}
+  {{- $val = printf "%s ·%d/" $val $parts -}}
+{{- end -}}
+{{- partial "badge-draw.html" (dict "label" "devlog" "val" $val "color" $c) -}}

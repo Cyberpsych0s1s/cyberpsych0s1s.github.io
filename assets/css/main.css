@@ -287,6 +287,17 @@ body.is-home .shell {
 .thread-parts { border-left: 1px solid var(--paper-tag-2); padding-left: 14px; margin-top: 6px; display: flex; flex-direction: column; gap: 12px; }
 .thread-parts .part { font-size: 13px; line-height: 1.7; color: var(--ink); }
 .thread-parts .part .n { color: var(--red); margin-right: 6px; }
+
+.series-index { list-style: none; padding: 0; margin: 22px 0 0; counter-reset: s; }
+.series-index li { counter-increment: s; padding: 12px 0; border-top: 1px solid var(--paper-tag-2); }
+.series-index li::before { content: counter(s, decimal-leading-zero); color: var(--red); margin-right: 10px; font-size: 12px; }
+.series-index a { font-size: 16px; color: var(--ink); text-transform: lowercase; }
+.series-index a:hover { color: var(--red); }
+.series-index .s-meta { display: flex; gap: 12px; margin-top: 3px; font-size: 11px; color: var(--ink-meta); }
+.series-index .s-excerpt { margin-top: 5px; font-size: 12.5px; line-height: 1.6; color: var(--ink-muted); }
+.series-backlink { margin-top: 16px; font-size: 12px; color: var(--ink-muted); }
+.series-empty { margin-top: 22px; font-size: 13px; color: var(--ink-meta); }
+
 .pager { text-align: center; font-size: 11px; color: var(--glow-muted); margin-top: 20px; }
 
 .archive-list { width: 100%; border-collapse: collapse; font-size: 12px; }

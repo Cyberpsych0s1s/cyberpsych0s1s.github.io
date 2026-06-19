@@ -1,11 +1,40 @@
 {{ define "main" }}
 <article class="panel" style="padding: clamp(20px,5vw,40px)">
-  <header class="essay-head">
-    <h1>{{ .Title }}</h1>
-    {{ if eq .Section "devlogs" }}
-    <div class="meta"><span>{{ .Date.Format "2006.01.02" }}</span>{{ with .Params.tags }} &middot; {{ delimit . ", " }}{{ end }}</div>
+  {{ if eq .Section "devlogs" }}
+    {{ $t := .Params.type | default "fragment" }}
+    <header class="essay-head">
+      <div class="meta">
+        <span>{{ .Date.Format "2006.01.02" }}</span>
+        <span class="e-chip">{{ $t }}</span>
+        {{ if eq $t "essay" }}<span class="reading-time">{{ partial "icon.html" "clock" }}{{ or .Params.reading_time .ReadingTime }} min</span>{{ end }}
+      </div>
+      {{ with .Title }}<h1>{{ . }}</h1>{{ end }}
+    </header>
+
+    <div class="prose">
+      {{ if eq $t "thread" }}
+        <div class="thread-parts">
+          {{ range $i, $part := split (trim .RawContent "\n") "\n---\n" }}<div class="part"><span class="n">{{ add $i 1 }}/</span>{{ $part | markdownify }}</div>{{ end }}
+        </div>
+      {{ else }}
+        {{ .Content }}
+      {{ end }}
+    </div>
+
+    {{ with .Params.tags }}<div class="chips" style="margin-top:18px">{{ range . }}<span class="chip">{{ . }}</span>{{ end }}</div>{{ end }}
+    {{ with .Params.project }}<p style="margin-top:12px"><span class="ulabel">re:</span> <a href="{{ printf "/projects/%s/" . | relURL }}">{{ . }}</a></p>{{ end }}
+
+    {{ if and .CurrentSection (eq (.CurrentSection.Params.type | default "") "series") }}
+      <p class="series-backlink"><span class="ulabel">part of:</span> <a href="{{ .CurrentSection.RelPermalink }}">{{ .CurrentSection.Title }}</a></p>
     {{ end }}
-  </header>
-  <div class="prose">{{ .Content }}</div>
+
+    <div class="prevnext">
+      <span>{{ with .PrevInSection }}<a href="{{ .RelPermalink }}">&lsaquo; prev signal</a>{{ end }}</span>
+      <span>{{ with .NextInSection }}<a href="{{ .RelPermalink }}">next signal &rsaquo;</a>{{ end }}</span>
+    </div>
+  {{ else }}
+    <header class="essay-head"><h1>{{ .Title }}</h1></header>
+    <div class="prose">{{ .Content }}</div>
+  {{ end }}
 </article>
 {{ end }}

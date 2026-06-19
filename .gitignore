@@ -7,6 +7,8 @@
 .DS_Store
 Thumbs.db
 
-# local tooling
-.claude/
+# voice reference "How to speak in the wired -Dr Wired mc Wired Hands"
 voice.md
+
+# internal assets (python scripts, reference docs, etc..)
+internal/*

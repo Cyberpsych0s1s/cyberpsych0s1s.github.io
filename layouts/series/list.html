@@ -1,0 +1,30 @@
+{{ define "main" }}
+<article class="panel" style="padding: clamp(20px,5vw,40px)">
+  <header class="essay-head">
+    <div class="meta">
+      <span>{{ .Date.Format "2006.01.02" }}</span>
+      <span class="e-chip">series &middot; {{ len .RegularPages }}</span>
+      {{ with .Params.project }}<span class="e-chip">re: {{ . }}</span>{{ end }}
+    </div>
+    {{ with .Title }}<h1>{{ . }}</h1>{{ end }}
+  </header>
+
+  {{ with .Content }}<div class="prose">{{ . }}</div>{{ end }}
+
+  {{ if .RegularPages }}
+  <ol class="series-index">
+    {{ range .RegularPages.ByWeight }}
+      <li>
+        <a href="{{ .RelPermalink }}">{{ .Title }}</a>
+        <div class="s-meta"><span>{{ .Date.Format "2006.01.02" }}</span>{{ if or .Params.reading_time .ReadingTime }}<span class="reading-time">{{ partial "icon.html" "clock" }}{{ or .Params.reading_time .ReadingTime }} min</span>{{ end }}</div>
+        {{ with .Summary }}<div class="s-excerpt">{{ . | plainify | truncate 160 }}</div>{{ end }}
+      </li>
+    {{ end }}
+  </ol>
+  {{ else }}
+  <p class="series-empty">no transmissions yet &mdash; the line is open.</p>
+  {{ end }}
+
+  {{ with .Params.tags }}<div class="chips" style="margin-top:18px">{{ range . }}<span class="chip">{{ . }}</span>{{ end }}</div>{{ end }}
+</article>
+{{ end }}

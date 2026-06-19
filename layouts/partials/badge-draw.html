@@ -1,0 +1,9 @@
+{{- /* draws a two-segment shield. dict: label, val, color */ -}}
+{{- $label := .label -}}
+{{- $val := .val -}}
+{{- $c := .color -}}
+{{- $ch := 6.6 -}}
+{{- $lw := add (mul (len $label) $ch) 16.0 -}}
+{{- $vw := add (mul (len $val) $ch) 18.0 -}}
+{{- $w := add $lw $vw -}}
+<svg xmlns="http://www.w3.org/2000/svg" width="{{ printf "%.1f" $w }}" height="22" role="img" aria-label="{{ $label }}: {{ $val }}"><title>{{ $label }}: {{ $val }}</title><clipPath id="r"><rect width="{{ printf "%.1f" $w }}" height="22" rx="4"/></clipPath><g clip-path="url(#r)"><rect width="{{ printf "%.1f" $lw }}" height="22" fill="#1f1810"/><rect x="{{ printf "%.1f" $lw }}" width="{{ printf "%.1f" $vw }}" height="22" fill="{{ $c }}"/></g><g font-family="ui-monospace, 'Departure Mono', monospace" font-size="11"><text x="{{ printf "%.1f" (div $lw 2) }}" y="15" fill="#ddd5c4" text-anchor="middle">{{ $label }}</text><text x="{{ printf "%.1f" (add $lw (div $vw 2)) }}" y="15" fill="#f4efe3" text-anchor="middle">{{ $val }}</text></g></svg>

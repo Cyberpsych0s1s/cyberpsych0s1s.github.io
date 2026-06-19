@@ -1,0 +1,4 @@
+{{- $n := len .RegularPages -}}
+{{- $val := .Title | lower -}}
+{{- if gt $n 0 -}}{{- $val = printf "%s ·%d" $val $n -}}{{- end -}}
+{{- partial "badge-draw.html" (dict "label" "devlog" "val" $val "color" "#b08a3a") -}}

@@ -59,3 +59,13 @@ timeZone = "Asia/Dubai"
 
 [pagination]
   pagerSize = 20
+
+# badge: per-thread SVG shield, opt-in via page frontmatter `outputs = ["html","badge"]`.
+# served at /<section>/<slug>/badge.svg
+[outputFormats]
+  [outputFormats.badge]
+    mediaType = "image/svg+xml"
+    isPlainText = true
+    isHTML = false
+    notAlternative = true
+    baseName = "badge"

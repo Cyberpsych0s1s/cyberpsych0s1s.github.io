@@ -5,6 +5,7 @@
 
 <div class="filters" data-scope="#feed" role="group" aria-label="filter devlogs">
   <button type="button" data-f="all" class="on">all</button>
+  <button type="button" data-f="series">series</button>
   <button type="button" data-f="thread">threads</button>
   <button type="button" data-f="essay">essays</button>
   <button type="button" data-f="fragment">fragments</button>
@@ -20,10 +21,15 @@
       {{ else if eq $t "thread" }}
         {{ $parts := split (trim .RawContent "\n") "\n---\n" }}
         <div class="e-head"><span class="ts">{{ .Date.Format "2006.01.02" }}</span><span class="e-chip">thread &middot; {{ len $parts }}</span>{{ with .Params.project }}<span class="e-chip">re: {{ . }}</span>{{ end }}</div>
-        {{ with .Title }}<div class="e-title"><a href="{{ $.RelPermalink }}">{{ . }}</a></div>{{ end }}
+        {{ if .Title }}<div class="e-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></div>{{ end }}
         <div class="thread-parts">
           {{ range $i, $part := $parts }}<div class="part"><span class="n">{{ add $i 1 }}/</span>{{ $part | markdownify }}</div>{{ end }}
         </div>
+      {{ else if eq $t "series" }}
+        <div class="e-head"><span class="ts">{{ .Date.Format "2006.01.02" }}</span><span class="e-chip">series{{ if .RegularPages }} &middot; {{ len .RegularPages }}{{ end }}</span>{{ with .Params.project }}<span class="e-chip">re: {{ . }}</span>{{ end }}</div>
+        {{ if .Title }}<div class="e-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></div>{{ end }}
+        <div class="e-excerpt">{{ .Summary | plainify | truncate 200 }}</div>
+        <a class="read-more" href="{{ .RelPermalink }}">open series &rarr;</a>
       {{ else }}
         <div class="e-head"><span class="ts">{{ .Date.Format "2006.01.02" }}</span><span class="e-chip">essay</span><span class="reading-time">{{ partial "icon.html" "clock" }}{{ or .Params.reading_time .ReadingTime }} min</span></div>
         <div class="e-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></div>
