@@ -35,6 +35,22 @@
   </div>
 </div>
 
+{{ with .Params.gallery }}
+<div class="now-card now-gallery">
+  <div class="ch"><span class="ulabel">frames</span></div>
+  <div class="now-frames">
+    {{ range . }}
+    <figure class="frame">
+      <button type="button" class="frame-btn" data-full="{{ .src }}" data-caption="{{ .caption }}"{{ with .date }} data-date="{{ . }}"{{ end }} aria-label="expand image: {{ .caption }}">
+        <img src="{{ .src }}" alt="{{ .caption }}" loading="lazy" decoding="async">
+      </button>
+      <figcaption>{{ .caption | markdownify }}{{ with .date }} <span class="f-date">&middot; {{ . }}</span>{{ end }}</figcaption>
+    </figure>
+    {{ end }}
+  </div>
+</div>
+{{ end }}
+
 <div class="mood-strip">
   <span class="m-mood">{{ with .Params.mood }}mood: {{ . | markdownify }}{{ end }}</span>
   <span>uptime <span data-since="2026-05-01T00:00:00">&hellip;</span> &middot; temp 41&deg;c</span>

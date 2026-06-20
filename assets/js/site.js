@@ -327,6 +327,41 @@
   }
   initPage();
 
+  /* lightbox — click a gallery frame to enlarge it, caption shown below; esc or
+     backdrop closes. Delegated on document so it survives soft-navigation. */
+  (function () {
+    var box = null, imgEl, capEl, lastFocus = null;
+    function build() {
+      box = doc.createElement("div");
+      box.className = "lightbox"; box.hidden = true;
+      box.setAttribute("role", "dialog"); box.setAttribute("aria-modal", "true");
+      box.innerHTML = "<button type='button' class='lb-close' aria-label='close'>×</button><img alt=''><figcaption></figcaption>";
+      imgEl = box.querySelector("img"); capEl = box.querySelector("figcaption");
+      box.addEventListener("click", function (e) { if (e.target === box || e.target.closest(".lb-close")) close(); });
+      doc.body.appendChild(box);
+    }
+    function open(src, caption, date) {
+      if (!box) build();
+      imgEl.src = src; imgEl.alt = caption || "";
+      capEl.innerHTML = (caption || "") + (date ? " <span class='lb-date'>· " + date + "</span>" : "");
+      lastFocus = doc.activeElement;
+      box.hidden = false; box.querySelector(".lb-close").focus();
+      Audio.confirm();
+    }
+    function close() {
+      if (!box || box.hidden) return;
+      box.hidden = true; imgEl.removeAttribute("src");
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    }
+    doc.addEventListener("click", function (e) {
+      var btn = e.target.closest && e.target.closest(".frame-btn");
+      if (!btn) return;
+      e.preventDefault();
+      open(btn.getAttribute("data-full"), btn.getAttribute("data-caption"), btn.getAttribute("data-date"));
+    });
+    doc.addEventListener("keydown", function (e) { if (e.key === "Escape") close(); });
+  })();
+
   /* soft navigation — fetch + swap #main, keeping the AudioContext alive across pages. */
   (function router() {
     var parser = new DOMParser();
