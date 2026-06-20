@@ -1,7 +1,6 @@
 ---
 title: "now"
 layout: "now"
-# bump this whenever you edit — it drives the "updated Nd ago" badge.
 updated: 2026-05-31
 focus: "completing high-school"
 building: ["[libnvme-rs](https://github.com/cyberpsych0s1s/libnvme-rs)", "[digon](https://github.com/cyberpsych0s1s/digon)","[quert](https://github.com/cyberpsych0s1s/quert)","[khatm](https://github.com/cyberpsych0s1s/khatm)"]
